@@ -1,4 +1,13 @@
-﻿// Функция для ввода данных
+﻿string q = "n";
+
+
+void exit()
+{
+    Console.WriteLine("ВЫХОД ИЗ ПРОГРАММЫ...");
+}
+
+
+// Функция для ввода данных
 int GetData()
 {
     Console.Write("_______________________________________________\nВведите целое число... ");
@@ -151,60 +160,66 @@ void hmp()
 }
 
 
-
 // Главное меню
+
 void main()
 {
 restart:
-    Console.WriteLine("\n\nВЫБЕРИТЕ ДЕЙСТВИЕ....");
-    Console.WriteLine("\n================================================\n 1. Найти n-ую цифру числа.\n 2. Удалить n-ую цифру числа.\n 3. Определить выходной по номеру дня недели.\n 4. Сколько программистов в комнате?\n 5. Выход.\n================================================\n");
-    int choice = GetData();
-    switch (choice)
+    try
     {
-        case 1:
-            FindNum();
-            PauseEnt();
-            break;
-        case 2:
-            RemoveNum();
-            PauseEnt();
-            break;
-        case 3:
-            Week();
-            PauseEnt();
-            break;
-        case 4:
-            hmp();
-            PauseEnt();
-            break;
-        case 5:
-            Console.Write("_______________________________________________\nВы уверены что хотите выйти из программы?\n  [y - Да.]  |  [n - Нет.]  ");
-            string q = "n";
-            q = Console.ReadLine();
-            if (q == "y") break;
-            else if (q == "n") goto restart;
-            else
-            {
-                Console.WriteLine($"\n================================================\n{q}. Вы неверно ответили на вопрос!\n================================================\n");
-                goto case 5;
-            }
-        default:
-            Console.WriteLine($"\n================================================\n{choice}. Вы выбрали несуществующий пункт меню!\n================================================\n");
-            PauseEnt();
-            goto restart;
+        Console.WriteLine("\n\nВЫБЕРИТЕ ДЕЙСТВИЕ....");
+        Console.WriteLine("\n================================================\n"+
+        " 1. Найти n-ую цифру числа.\n"+
+        " 2. Удалить n-ую цифру числа.\n"+
+        " 3. Определить выходной по номеру дня недели.\n"+
+        " 4. Сколько программистов в комнате?\n"+
+        " 5. Выход.\n================================================\n");
+        int choice = GetData();
+        switch (choice)
+        {
+            case 1:
+                FindNum();
+                PauseEnt();
+                break;
+            case 2:
+                RemoveNum();
+                PauseEnt();
+                break;
+            case 3:
+                Week();
+                PauseEnt();
+                break;
+            case 4:
+                hmp();
+                PauseEnt();
+                break;
+            case 5:
+                Console.Write("_______________________________________________\nВы уверены что хотите выйти из программы?\n  [y - Да.]  |  [n - Нет.]  ");
+                q = Console.ReadLine();
+                if (q.ToLower() == "y")
+                {
+                    exit();
+                    break;
+                }
+                else if (q.ToLower() == "n") goto restart;
+                else
+                {
+                    Console.WriteLine($"\n================================================\n{q}. Вы неверно ответили на вопрос!\n================================================\n");
+                    goto case 5;
+                }
+            default:
+                Console.WriteLine($"\n================================================\n{choice}. Вы выбрали несуществующий пункт меню!\n================================================\n");
+                PauseEnt();
+                goto restart;
+        }
+    }
+    catch
+    {
+        Console.WriteLine("Вы ввели не целое число!!!");
+        PauseEnt();
+        if (q.ToLower() == "n") main();
     }
 }
 
 
-try
-{
-    main();
-}
-
-
-catch
-{
-    Console.WriteLine("Вы ввели не целое число!!!");
-    PauseEnt();
-    main();
-}
+if (q.ToLower() == "n") main();
