@@ -8,7 +8,7 @@ int GetData()
 
 
 // Функция останавливает программу после выполнения
-// одной задачи чтобы результат не ушел наверх консоли
+// одной задачи чтобы результат не ушел наверх в консоли
 void PauseEnt()
 {
     Console.Write("_______________________________________________\nЧтобы продолжить, нажмите ENTER... ");
@@ -23,7 +23,7 @@ void FindNum()
 {
     Console.WriteLine("\n\nУКАЖИТЕ ЧИСЛО С ЛЮБОЙ РАЗРЯДНОСТЬЮ:");
     int x = GetData();
-    ret:
+ret:
     Console.WriteLine("\n\nКАКОЕ ПО СЧЕТУ ЧИСЛО БУДЕМ ИЗВЛЕКАТЬ?");
     int n = GetData();
     string x1 = x.ToString();
@@ -45,7 +45,7 @@ void FindNum()
             }
             if (i == n)
             {
-                result = x % 10;          
+                result = x % 10;
             }
             i = i - 1;
         }
@@ -58,8 +58,8 @@ void FindNum()
 // обозначающую день недели, и проверяет, является ли этот день выходным.
 void Week()
 {
-    string[] week = {"Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"};
-    ret:
+    string[] week = { "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье" };
+ret:
     Console.WriteLine("\nУКАЖИТЕ ДЕНЬ НЕДЕЛИ:\n\n 1. Понедельник\n 2. Вторник\n 3. Среда\n 4. Четверг\n 5. Пятница\n 6. Суббота\n 7. Воскресенье");
     int x = GetData();
     int index = x - 1;
@@ -90,7 +90,7 @@ void RemoveNum()
 {
     Console.WriteLine("\n\nУКАЖИТЕ ЧИСЛО С ЛЮБОЙ РАЗРЯДНОСТЬЮ:");
     int x = GetData();
-    ret:
+ret:
     Console.WriteLine("\n\nКАКОЕ ПО СЧЕТУ ЧИСЛО БУДЕМ УДАЛЯТЬ?");
     int n = GetData();
     string x1 = x.ToString();
@@ -114,8 +114,8 @@ void RemoveNum()
             }
             if (i != n)
             {
-                result = x % 10; 
-                r = result+r;
+                result = x % 10;
+                r = result + r;
             }
             i = i - 1;
         }
@@ -155,37 +155,43 @@ void hmp()
 // Главное меню
 void main()
 {
+restart:
     Console.WriteLine("\n\nВЫБЕРИТЕ ДЕЙСТВИЕ....");
     Console.WriteLine("\n================================================\n 1. Найти n-ую цифру числа.\n 2. Удалить n-ую цифру числа.\n 3. Определить выходной по номеру дня недели.\n 4. Сколько программистов в комнате?\n 5. Выход.\n================================================\n");
     int choice = GetData();
-    if (choice > 5)
+    switch (choice)
     {
-        Console.WriteLine($"\n\n{choice}. ВЫ ВЫБРАЛИ НЕ СУЩЕСТВУЮЩИЙ ПУНКТ МЕНЮ. ПОВТОРИТЕ ПОПЫТКУ.");
-        PauseEnt();
-    }
-    else
-    {
-        switch (choice)
-        {
-            case 1:
-                FindNum();
-                PauseEnt();
-                break;
-            case 2:
-                RemoveNum();
-                PauseEnt();
-                break;
-            case 3:
-                Week();
-                PauseEnt();
-                break;
-            case 4:
-                hmp();
-                PauseEnt();
-                break;
-            case 5:
-                break;
-        }
+        case 1:
+            FindNum();
+            PauseEnt();
+            break;
+        case 2:
+            RemoveNum();
+            PauseEnt();
+            break;
+        case 3:
+            Week();
+            PauseEnt();
+            break;
+        case 4:
+            hmp();
+            PauseEnt();
+            break;
+        case 5:
+            Console.Write("_______________________________________________\nВы уверены что хотите выйти из программы?\n  [y - Да.]  |  [n - Нет.]  ");
+            string q = "n";
+            q = Console.ReadLine();
+            if (q == "y") break;
+            else if (q == "n") goto restart;
+            else
+            {
+                Console.WriteLine($"\n================================================\n{q}. Вы неверно ответили на вопрос!\n================================================\n");
+                goto case 5;
+            }
+        default:
+            Console.WriteLine($"\n================================================\n{choice}. Вы выбрали несуществующий пункт меню!\n================================================\n");
+            PauseEnt();
+            goto restart;
     }
 }
 
@@ -199,4 +205,6 @@ try
 catch
 {
     Console.WriteLine("Вы ввели не целое число!!!");
+    PauseEnt();
+    main();
 }
